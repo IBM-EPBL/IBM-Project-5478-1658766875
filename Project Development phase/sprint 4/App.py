@@ -1,11 +1,12 @@
 import numpy as np
 import pandas as pd
+import sklearn
 from flask import Flask, request, render_template
-#import pickle5 as pickle
+import pickle5 as pickle
 
 
 app = Flask(__name__)
-#model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('Models/modeling.pkl', 'rb'))
 
 
 @app.route('/')
@@ -28,7 +29,8 @@ def result():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    #input_features = ([int(x) for x in request.form.values()])
+    x=input()
+    input_features = ([int(x) for x in request.form.values()])
     blood_urea = request.form["blood_urea"]
     blood_glucose_random = request.form["blood_glucose_random"]
     anemia = request.form["Anemia"]
@@ -73,10 +75,10 @@ def predict():
 
 
     features_name = ['red_blood_cells','pus_cell','blood glucose random','blood_urea','pedal_edema','anemia','diabetesmellitus','coronary_artery_disease']
-    '''features_name = ['blood_urea','blood glucose random','anemia','coronary_artery_disease','pus_cell','red_blood_cells','diabetesmellitus','pedal_edema' ]
+    features_name = ['blood_urea','blood glucose random','anemia','coronary_artery_disease','pus_cell','red_blood_cells','diabetesmellitus','pedal_edema' ]
     df = pd.DataFrame(features_value, columns=features_name)
     output = model.predict(df)
-    return render_template('result.html', prediction_text=output)'''
+    return render_template('result.html', prediction_text=output)
 
 @app.route('/about')
 def about():
